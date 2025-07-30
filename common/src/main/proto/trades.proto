@@ -1,0 +1,34 @@
+// A file that defines the data structures and service contract.
+syntax = "proto3";
+
+// This tells the code generator what Java package to put the
+// auto-generated classes into.
+option java_package = "com.bank.poc.grpcvsrest.grpc";
+option java_multiple_files = true;
+
+// The service that provides trade data. This is our API definition.
+service TradeService {
+  // A remote procedure call (RPC) to get trades for a client.
+  // It takes a TradeRequest and returns a TradeResponse.
+  rpc GetTradesForClient(TradeRequest) returns (TradeResponse);
+}
+
+// The request message. It just needs the ID of the client.
+message TradeRequest {
+  string client_id = 1;
+}
+
+// The response message. It will contain a list of trades.
+message TradeResponse {
+  // 'repeated' means it's a list or array of Trade messages.
+  repeated Trade trades = 1;
+}
+
+// This defines the structure of a single financial Trade.
+message Trade {
+  string trade_id = 1;
+  string instrument_name = 2;
+  int64 quantity = 3;         // int64 is a 64-bit integer, like 'long' in Java
+  double price = 4;
+  string trade_timestamp = 5;
+}
